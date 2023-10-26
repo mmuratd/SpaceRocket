@@ -5,10 +5,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
+    
     [SerializeField] float powerOfMotor = 100f;
     [SerializeField] float rotationSpeed = 1f;
 
+    AudioSource audioSource;
     Rigidbody rb;
     Vector2 input;
     Transform transform;
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     {
         transform = GetComponent<Transform>();
         rb = GetComponent<Rigidbody>(); 
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessRotation();
         ProcessThrust();
+        
     }
     
     void OnFire(InputValue value)
@@ -37,8 +40,19 @@ public class PlayerMovement : MonoBehaviour
     }
     void ProcessThrust()
     {  
-        
+        if (input.y  > 0)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.Play();
+                
+            }
+        } else
+        {
+            audioSource.Stop();
+        }
         rb.AddRelativeForce(Vector3.up * powerOfMotor * input.y * Time.deltaTime);
+        
     }
 
     void ProcessRotation()
