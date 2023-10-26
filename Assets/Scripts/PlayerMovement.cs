@@ -28,7 +28,10 @@ public class PlayerMovement : MonoBehaviour
         ProcessThrust();
         
     }
-    
+    protected void LateUpdate()
+    {
+        transform.localEulerAngles = new Vector3(0, 0, transform.localEulerAngles.z);
+    }
     void OnFire(InputValue value)
     {
         
@@ -57,6 +60,8 @@ public class PlayerMovement : MonoBehaviour
 
     void ProcessRotation()
     {
+
+        
         transform.Rotate(0, 0, -input.x * rotationSpeed * Time.deltaTime);
         
     }
