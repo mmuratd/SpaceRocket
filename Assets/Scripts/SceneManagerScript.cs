@@ -7,12 +7,13 @@ using UnityEngine.SceneManagement;
 public class SceneManagerScript : MonoBehaviour
 {
     int currentSceneIndex = 0;
-
+    
     internal void LoadNextLevel()
     {
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
         try
         {
+            if (currentSceneIndex == SceneManager.loadedSceneCount) { ReloadLevel(); return; }
             SceneManager.LoadScene(currentSceneIndex + 1);
         }
         catch (Exception e)
